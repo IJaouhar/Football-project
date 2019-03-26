@@ -1,38 +1,19 @@
 import React, { Component } from 'react'
-
+import { connect } from 'react-redux';
+import { fetchList } from '../actions/listAction';
 class List extends Component {
-  constructor(props){
-super(props);
-    this.state = {
-      listT: [],
-      listI: [],
-      listO: []
-    }
-  }
   componentDidMount() {
-    const miId = {
-      headers: { 'X-Auth-Token': 'a4d6a8ff333a473da9758b0bd0cb9e1e' },
-      dataType: 'json',
-      type: 'GET',
-    };
-
-    fetch('https://api.football-data.org/v2/competitions/2014/standings', miId)
-      .then(res => res.json())
-      .then(data => this.setState({
-        listT: data.standings[0].table,
-        listI: data.standings[1].table,
-        listO: data.standings[2].table
-      }))
+    this.props.fetchList();
   }
 
   render() {
-    const team = this.state.listT.map(total => (
+    const team = this.props.listT.map(total => (
       <div key={total.id} className="row">
         <img className="img" src={total.team.crestUrl} />
         <p>{total.team.name}</p>
       </div>
     ));
-    const total = this.state.listT.map(total => (
+    const total = this.props.listT.map(total => (
       <div key={total.id} className="row">
         <p>{total.points}</p>
         <p>{total.won}</p>
@@ -44,7 +25,7 @@ super(props);
       </div>
     ));
 
-    const home = this.state.listI.map(home => (
+    const home = this.props.listI.map(home => (
       <div key={home.id} className="row">
         <p>{home.points}</p>
         <p>{home.won}</p>
@@ -56,7 +37,7 @@ super(props);
       </div>
     ));
 
-    const out = this.state.listO.map(out => (
+    const out = this.props.listO.map(out => (
       <div key={out.id} className="row">
         <p>{out.points}</p>
         <p>{out.won}</p>
@@ -79,6 +60,12 @@ super(props);
   }
 }
 
-export default List
+const mapStateToProps = state => ({
+  listT: state.lists.listT,
+  listI: state.lists.listI,
+  listO: state.lists.listO
+})
+
+export default connect(mapStateToProps, { fetchList })(List)
 
 
