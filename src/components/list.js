@@ -23,14 +23,17 @@ super(props);
         listI: data.standings[1].table,
         listO: data.standings[2].table
       }))
-      .then(data => console.log(this.state.listT))
   }
 
   render() {
-    const total = this.state.listT.map(total => (
-      <div>
+    const team = this.state.listT.map(total => (
+      <div key={total.id} className="row">
+        <img className="img" src={total.team.crestUrl} />
         <p>{total.team.name}</p>
-        {/* <img src={total.team.crestUrl} /> */}
+      </div>
+    ));
+    const total = this.state.listT.map(total => (
+      <div key={total.id} className="row">
         <p>{total.points}</p>
         <p>{total.won}</p>
         <p>{total.draw}</p>
@@ -40,10 +43,37 @@ super(props);
         <p>{total.goalDifference}</p>
       </div>
     ));
+
+    const home = this.state.listI.map(home => (
+      <div key={home.id} className="row">
+        <p>{home.points}</p>
+        <p>{home.won}</p>
+        <p>{home.draw}</p>
+        <p>{home.lost}</p>
+        <p>{home.goalsFor}</p>
+        <p>{home.goalsAgainst}</p>
+        <p>{home.goalDifference}</p>
+      </div>
+    ));
+
+    const out = this.state.listO.map(out => (
+      <div key={out.id} className="row">
+        <p>{out.points}</p>
+        <p>{out.won}</p>
+        <p>{out.draw}</p>
+        <p>{out.lost}</p>
+        <p>{out.goalsFor}</p>
+        <p>{out.goalsAgainst}</p>
+        <p>{out.goalDifference}</p>
+      </div>
+    ));
     
     return (
       <div className="container">
-        {total}
+        <div>{team}</div>
+        <div>{total}</div>
+        <div>{home}</div>
+        <div>{out}</div>
       </div>
     )
   }

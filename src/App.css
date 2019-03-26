@@ -1,8 +1,19 @@
 .App {
   text-align: center;
+  margin: 20px 20px;
 }
 
-.container {
+.container{
   display: grid;
-  grid-template-rows: 35px;
+  grid-template-columns: 15% 25% 25% 25%;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.img {
+  height: 30px;
 }
