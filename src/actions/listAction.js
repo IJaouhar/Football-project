@@ -8,10 +8,10 @@ export const fetchList  = () => dispatch => {
   };
   fetch('https://api.football-data.org/v2/competitions/2014/standings', miId)
     .then(res => res.json())
-    .then(data => this.setState({
-      data: data,
+    .then(data => 
+      dispatch({
+        type: FETCH_LIST,
+        data: data,
     })
-    .then(data => console.log(data)
-    )
   );
 }
